@@ -1,11 +1,18 @@
 // scripts/deploy.js
 async function main () {
-  // We get the contract to deploy
-  const Box = await ethers.getContractFactory('Box');
-  console.log('Deploying Box...');
-  const box = await Box.deploy();
-  await box.waitForDeployment();
-  console.log('Box deployed to:', await box.getAddress());
+  // Deploying EternalStorage
+  const EternalStorage = await ethers.getContractFactory('EternalStorage');
+  console.log('Deploying EternalStorage...');
+  const eternalStorage = await EternalStorage.deploy();
+  await eternalStorage.waitForDeployment();
+  console.log('EternalStorage deployed to:', await eternalStorage.getAddress());
+  
+  // Deploying AlarmStorage
+  const AlarmStorage = await ethers.getContractFactory('AlarmStorage');
+  console.log('Deploying AlarmStorage...');
+  const alarmStorage = await AlarmStorage.deploy();
+  await alarmStorage.waitForDeployment();
+  console.log('AlarmStorage deployed to:', await alarmStorage.getAddress());
 }
 
 main()

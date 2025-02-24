@@ -18,9 +18,9 @@ const client = mqtt.connect(
 });
 
 async function main () {
-  const address = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-  const Box = await ethers.getContractFactory('Box');
-  const box = Box.attach(address);
+  const address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+  const AlarmStorage = await ethers.getContractFactory('AlarmStorage');
+  const alarmStorage = AlarmStorage.attach(address);
   
   const topics = ['intrusion', 'fire', 'info'];
   client.subscribe(topics, (err) => {
@@ -41,18 +41,18 @@ async function main () {
       complete_message = JSON.stringify(json_message);
 
       if (topic === 'intrusion') {
-        console.log("Intrusion detected! Message: " + complete_message);
+        console.log("Intrusion detected! ");
       } else if (topic === 'fire') {
-        console.log("Fire detected! Message: " + complete_message);
+        console.log("Fire detected! ");
       } else if (topic === 'info') {
-        console.log("Scheduled system status info: " + complete_message);
+        console.log("Scheduled system status info: ");
       } else {
-        console.log("Something went wrong: " + complete_message);
+        console.log("Something went wrong! Message: ");
       }
       
-      await box.store(complete_message);
-      const value = await box.retrieve();
-      console.log("Box value is:\n" + value.toString());
+      await alarmStorage.store(complete_message);
+      const value = await alarmStorage.retrieve();
+      console.log(value.toString());
     });
 
   });
